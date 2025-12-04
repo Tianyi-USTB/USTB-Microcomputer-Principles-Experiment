@@ -6,6 +6,7 @@ packDir: .pack/Keil/STM32F4xx_DFP.2.14.0
 srcDirs:
   - src
   - lib
+  - bsp
 virtualFolder:
   name: <virtual_root>
   files: []
@@ -31,6 +32,8 @@ targets:
         - lib/CMSIS/RTOS2/RTX/Include
         - lib/CMSIS/RTOS2/RTX/Config
         - lib/CMSIS/Core/Include
+        - bsp/inc
+        - bsp/src
       libList: []
     excludeList: []
     toolchain: GCC
