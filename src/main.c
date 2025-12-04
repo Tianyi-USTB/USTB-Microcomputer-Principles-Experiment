@@ -42,8 +42,8 @@ int main(void)
     SystemClock_Config();
     SysTick_Config(SystemCoreClock / 1000); // 1ms tick
 
-    LED_Lib_Init();
-    Switch_Lib_Init();
+    LED_Reg_Init();
+    Switch_Reg_Init();
 
     while (1) {
         GPIOE->ODR = (GPIOE->ODR & 0xFF << 8) | ~(GPIOF->IDR & 0xFF);

@@ -9,7 +9,7 @@ void Switch_Lib_Init(){
 }
 
 void Switch_Reg_Init(){
-    RCC->APB1ENR |= 1 << 5; 
-    GPIOF->MODER &= 0x00000000;
+    RCC->AHB1ENR |= 1 << 5;
+    GPIOF->MODER = 0x00000000;
     GPIOF->PUPDR = 0x55555555;
 }

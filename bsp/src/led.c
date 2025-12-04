@@ -10,8 +10,8 @@ void LED_Lib_Init(){
     GPIO_Init(GPIOE, &GPIO_InitStructure);
 }
 
-void Led_Reg_Init(){
-    RCC->APB1ENR |= 1 << 4; 
+void LED_Reg_Init(){
+    RCC->AHB1ENR |= 1 << 4; 
     GPIOE->MODER = 0x55555555;
     GPIOE->OTYPER = 0x00000000;
     GPIOE->OSPEEDR = 0xFFFFFFFF;
