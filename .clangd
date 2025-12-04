@@ -1,0 +1,12 @@
+CompileFlags:
+  Add:
+    - -IC:\Users\Tianyi\.eide\tools\gcc_arm\arm-none-eabi\include\newlib-nano
+    - -IC:\Users\Tianyi\.eide\tools\gcc_arm\arm-none-eabi\include\c++\14.3.1
+    - -IC:\Users\Tianyi\.eide\tools\gcc_arm\arm-none-eabi\include\c++\14.3.1\arm-none-eabi\thumb\v7-m\nofp
+    - -IC:\Users\Tianyi\.eide\tools\gcc_arm\arm-none-eabi\include\c++\14.3.1\backward
+    - -IC:\Users\Tianyi\.eide\tools\gcc_arm\lib\gcc\arm-none-eabi\14.3.1\include
+    - -IC:\Users\Tianyi\.eide\tools\gcc_arm\lib\gcc\arm-none-eabi\14.3.1\include-fixed
+    - -IC:\Users\Tianyi\.eide\tools\gcc_arm\arm-none-eabi\include
+  Remove: []
+  CompilationDatabase: ./build/Debug
+  Compiler: C:\Users\Tianyi\.eide\tools\gcc_arm\bin\arm-none-eabi-gcc.exe
