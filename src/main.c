@@ -1,3 +1,4 @@
+
 #include "printf.h"
 #include "cmsis_gcc.h"
 #include "stm32f4xx.h"
@@ -5,39 +6,24 @@
 #include "adc.h"
 #include "usart.h"
 
+
+
 void SystemClock_Config(void)
 {
     RCC_DeInit();
     RCC_HSEConfig(RCC_HSE_ON);
     ErrorStatus HSEStartUpStatus = RCC_WaitForHSEStartUp();
-    
     if (HSEStartUpStatus == SUCCESS) {
-        // 配置FLASH等待周期（168MHz必须）
-        FLASH_SetLatency(FLASH_Latency_5);
-        FLASH_PrefetchBufferCmd(ENABLE);
-        FLASH_InstructionCacheCmd(ENABLE);
-        FLASH_DataCacheCmd(ENABLE);
-        
-        // 使能电源时钟并设置性能模式
-        RCC->APB1ENR |= RCC_APB1Periph_PWR;
-        PWR->CR |= PWR_CR_VOS;
-        
-        // 配置PLL
+        RCC->APB1ENR |= RCC_APB1ENR_PWREN;
+        PWR->CR |= PWR_CR_PMODE;
         RCC_PLLConfig(RCC_PLLSource_HSE, 8, 336, 2, 7);
         RCC_PLLCmd(ENABLE);
         while (RCC_GetFlagStatus(RCC_FLAG_PLLRDY) == RESET);
-        
-        // 配置分频
-        RCC_HCLKConfig(RCC_SYSCLK_Div1);     // HCLK = 168MHz
-        RCC_PCLK1Config(RCC_HCLK_Div4);     // APB1 = 42MHz
-        RCC_PCLK2Config(RCC_HCLK_Div2);     // APB2 = 84MHz
-        
-        // 切换到PLL
+        RCC_HCLKConfig(RCC_SYSCLK_Div1);
+        RCC_PCLK1Config(RCC_HCLK_Div4);
+        RCC_PCLK2Config(RCC_HCLK_Div2);
         RCC_SYSCLKConfig(RCC_SYSCLKSource_PLLCLK);
         while (RCC_GetSYSCLKSource() != 0x08);
-        
-        // 更新SystemCoreClock变量
-        SystemCoreClockUpdate();
     }
 }
 
@@ -65,11 +51,8 @@ int main(void)
     USART1_Init();
 
     while (1) {
-        // uint16_t value = GetValueOnce();
-        // printf("Hello World!");
-        // printf("value = %d V \n",value);
-        while (USART_GetFlagStatus(USART1,USART_FLAG_TXE) == 0);
-        USART_SendData(USART1,0x35);
-        Delay(1000);
+        uint16_t value = GetValueOnce();
+        printf("value = %f V \n",value*3.3f/4095.0f);
+        Delay(100);
     }
 }

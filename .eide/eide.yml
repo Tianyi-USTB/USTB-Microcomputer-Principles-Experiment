@@ -47,12 +47,9 @@ targets:
         options:
           version: 5
           afterBuildTasks: []
-          asm-compiler:
-            ASM_FLAGS: ""
+          asm-compiler: {}
           beforeBuildTasks: []
           c/cpp-compiler:
-            CXX_FLAGS: ""
-            C_FLAGS: ""
             language-c: c11
             language-cpp: c++11
             one-elf-section-per-data: true
@@ -61,10 +58,11 @@ targets:
             warnings: all-warnings
           global:
             $float-abi-type: softfp
-            misc-control: --specs=nosys.specs --specs=nano.specs
+            arm-thumb-mode: thumb
+            misc-control: --specs=nosys.specs --specs=nano.specs -DHSE_VALUE=8000000
             output-debug-info: enable
           linker:
-            LD_FLAGS: ""
+            $toolName: auto
             LIB_FLAGS: -lm
             output-format: elf
             remove-unused-input-sections: true
