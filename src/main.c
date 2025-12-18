@@ -1,6 +1,8 @@
 
 #include "cmsis_gcc.h"
 #include "stm32f4xx.h"
+#include "led.h"
+#include "timer.h"
 
 void SystemClock_Config(void)
 {
@@ -40,6 +42,12 @@ int main(void)
     SystemClock_Config();
     SysTick_Config(SystemCoreClock / 1000); // 1ms tick
 
+    LED_Init();
+    GPIOE->ODR = 0x1;
+
+    Timer2_Init();
+    NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
+    Timer2_NVIC_Init();
 
     while (1) {
         // Delay(500);
