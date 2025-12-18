@@ -5,7 +5,7 @@ void Timer4_Init(){
 
     TIM_TimeBaseInitTypeDef TIM_BaseInitStruct;
     TIM_BaseInitStruct.TIM_Prescaler = 84 -1;
-    TIM_BaseInitStruct.TIM_Period = 1500 -1;
+    TIM_BaseInitStruct.TIM_Period = 2*1000000/1000 -1; //1Mhz 4秒一循环 2秒计数1000次 2/(1/1000000*1000) = 2*1000000/1000
     TIM_BaseInitStruct.TIM_ClockDivision = TIM_CKD_DIV1;
     TIM_BaseInitStruct.TIM_CounterMode = TIM_CounterMode_Up;
 
