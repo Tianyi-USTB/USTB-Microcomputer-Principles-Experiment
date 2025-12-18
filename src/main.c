@@ -1,8 +1,8 @@
 
 #include "cmsis_gcc.h"
 #include "stm32f4xx.h"
-#include "led.h"
-#include "timer.h"
+#include "pot.h"
+#include "adc.h"
 
 void SystemClock_Config(void)
 {
@@ -54,21 +54,16 @@ void Delay(uint32_t delay)
     while ((tick - startTick) < delay);
 }
 
+uint16_t a = 0;
 int main(void)
 {
     SystemClock_Config();
     SysTick_Config(SystemCoreClock / 1000); // 1ms tick
 
-    LED_Init();
-    // GPIOD->ODR = ~(0x1 << 15);
-
-    Timer4_Init();
-    NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
-    Timer4_NVIC_Init();
-    TIM_Cmd(TIM4,ENABLE);
+    POT_Init();
+    ADC1_Init();
 
     while (1) {
-        // Delay(500);
-    // GPIO_ResetBits(GPIOE,GPIO_Pin_All);
+        a = GetValueOnce();
     }
 }
