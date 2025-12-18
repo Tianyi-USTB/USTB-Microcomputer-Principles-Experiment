@@ -1,7 +1,7 @@
 version: "4.1"
 name: stm32f4xx_gcc
 type: ARM
-deviceName: null
+deviceName: STM32F407ZETx
 packDir: .pack/Keil/STM32F4xx_DFP.2.14.0
 srcDirs:
   - src
@@ -21,6 +21,7 @@ targets:
       defineList:
         - STM32F40_41xxx
         - USE_STDPERIPH_DRIVER
+        - STM32F407xx
       incList:
         - .
         - lib/STM32F4xx_StdPeriph_Driver/inc
@@ -40,7 +41,7 @@ targets:
     toolchainConfigMap:
       GCC:
         archExtensions: ""
-        cpuType: Cortex-M3
+        cpuType: Cortex-M4
         floatingPointHardware: none
         options:
           version: 5
@@ -88,8 +89,8 @@ targets:
       OpenOCD:
         baseAddr: "0x08000000"
         bin: ""
-        interface: cmsis-dap
-        target: stm32f1x
+        interface: ${workspaceFolder}/cmsis-dap
+        target: ""
       STLink:
         address: "0x08000000"
         bin: ""

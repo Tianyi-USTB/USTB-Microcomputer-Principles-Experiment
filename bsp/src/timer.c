@@ -5,7 +5,7 @@ void Timer2_Init(){
 
     TIM_TimeBaseInitTypeDef TIM_BaseInitStruct;
     TIM_BaseInitStruct.TIM_Prescaler = 84 -1;
-    TIM_BaseInitStruct.TIM_Period = 1000 -1;
+    TIM_BaseInitStruct.TIM_Period = 1000000 -1;
     TIM_BaseInitStruct.TIM_ClockDivision = TIM_CKD_DIV1;
     TIM_BaseInitStruct.TIM_CounterMode = TIM_CounterMode_Up;
 
@@ -18,23 +18,29 @@ void Timer2_NVIC_Init(){
     NVIC_InitTypeDef NVIC_InitStruct;
 
     NVIC_InitStruct.NVIC_IRQChannel = TIM2_IRQn;
-    NVIC_InitStruct.NVIC_IRQChannelPreemptionPriority = 0;
-    NVIC_InitStruct.NVIC_IRQChannelSubPriority = 0;
+    NVIC_InitStruct.NVIC_IRQChannelPreemptionPriority = 0x1;
+    NVIC_InitStruct.NVIC_IRQChannelSubPriority = 0x1;
     NVIC_InitStruct.NVIC_IRQChannelCmd = ENABLE;
 
     NVIC_Init(&NVIC_InitStruct);
 }
 
 void TIM2_IRQHandler(){
-    if(TIM_GetFlagStatus(TIM2,TIM_FLAG_Update)){
+    if(TIM_GetITStatus(TIM2,TIM_IT_Update)){
         TIM_ClearITPendingBit(TIM2,TIM_IT_Update);
 
-        if (GPIOE->ODR == (1 << 7))
+        static uint8_t led1_on = 0;
+        if (led1_on == 1)
         {
-            GPIOE->ODR = 0x1;
-            return;
+            GPIO_ResetBits(GPIOE,GPIO_Pin_1);
+            GPIO_SetBits(GPIOE,GPIO_Pin_0);
+            led1_on = 0;
+        }
+        else{
+            GPIO_SetBits(GPIOE,GPIO_Pin_1);
+            GPIO_ResetBits(GPIOE,GPIO_Pin_0);
+            led1_on = 1;
         }
         
-        GPIOE->ODR = GPIOE->ODR << 1;
     }
 }
