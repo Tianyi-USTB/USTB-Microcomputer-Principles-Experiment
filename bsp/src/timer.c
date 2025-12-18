@@ -1,7 +1,7 @@
 #include "timer.h"
 
-void Timer4_Init(){
-    RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM4,ENABLE);
+void Timer2_Init(){
+    RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2,ENABLE);
 
     TIM_TimeBaseInitTypeDef TIM_BaseInitStruct;
     TIM_BaseInitStruct.TIM_Prescaler = 84 -1;
@@ -9,15 +9,15 @@ void Timer4_Init(){
     TIM_BaseInitStruct.TIM_ClockDivision = TIM_CKD_DIV1;
     TIM_BaseInitStruct.TIM_CounterMode = TIM_CounterMode_Up;
 
-    TIM_TimeBaseInit(TIM4,&TIM_BaseInitStruct);
+    TIM_TimeBaseInit(TIM2,&TIM_BaseInitStruct);
 
-    TIM_ITConfig(TIM4,TIM_IT_Update,ENABLE);
+    TIM_ITConfig(TIM2,TIM_IT_Update,ENABLE);
 }
 
-void Timer4_NVIC_Init(){
+void Timer2_NVIC_Init(){
     NVIC_InitTypeDef NVIC_InitStruct;
 
-    NVIC_InitStruct.NVIC_IRQChannel = TIM4_IRQn;
+    NVIC_InitStruct.NVIC_IRQChannel = TIM2_IRQn;
     NVIC_InitStruct.NVIC_IRQChannelPreemptionPriority = 0x1;
     NVIC_InitStruct.NVIC_IRQChannelSubPriority = 0x1;
     NVIC_InitStruct.NVIC_IRQChannelCmd = ENABLE;
@@ -25,7 +25,7 @@ void Timer4_NVIC_Init(){
     NVIC_Init(&NVIC_InitStruct);
 }
 
-void TIM4_IRQHandler(){
+void TIM2_IRQHandler(){
     if(TIM_GetITStatus(TIM2,TIM_IT_Update)){
         TIM_ClearITPendingBit(TIM2,TIM_IT_Update);
 
