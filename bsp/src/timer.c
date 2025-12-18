@@ -29,18 +29,28 @@ void TIM2_IRQHandler(){
     if(TIM_GetITStatus(TIM2,TIM_IT_Update)){
         TIM_ClearITPendingBit(TIM2,TIM_IT_Update);
 
-        static uint8_t led1_on = 0;
-        if (led1_on == 1)
-        {
-            GPIO_ResetBits(GPIOE,GPIO_Pin_1);
-            GPIO_SetBits(GPIOE,GPIO_Pin_0);
-            led1_on = 0;
-        }
-        else{
-            GPIO_SetBits(GPIOE,GPIO_Pin_1);
-            GPIO_ResetBits(GPIOE,GPIO_Pin_0);
-            led1_on = 1;
-        }
+        // static uint8_t led1_on = 0;
+        // if (led1_on == 1)
+        // {
+        //     GPIO_ResetBits(GPIOE,GPIO_Pin_1);
+        //     GPIO_SetBits(GPIOE,GPIO_Pin_0);
+        //     led1_on = 0;
+        // }
+        // else{
+        //     GPIO_SetBits(GPIOE,GPIO_Pin_1);
+        //     GPIO_ResetBits(GPIOE,GPIO_Pin_0);
+        //     led1_on = 1;
+        // }
         
+        static uint8_t led_num = 0;
+        if (led_num == 8)
+        {
+            led_num = 0;
+            // return;
+        }
+        GPIO_SetBits(GPIOE,GPIO_Pin_All);
+        GPIO_ResetBits(GPIOE,1<<led_num);
+        
+        led_num++;
     }
 }
