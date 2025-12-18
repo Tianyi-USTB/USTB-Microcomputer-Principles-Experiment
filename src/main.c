@@ -2,8 +2,8 @@
 #include "cmsis_gcc.h"
 #include "stm32f4xx.h"
 #include "led.h"
-#include "switch.h"
-#include "motor.h"
+#include "dac.h"
+#include "timer.h"
 
 void SystemClock_Config(void)
 {
@@ -38,28 +38,17 @@ void Delay(uint32_t delay)
     while ((tick - startTick) < delay);
 }
 
-uint8_t dir;
-uint8_t stop;
 int main(void)
 {
     SystemClock_Config();
     SysTick_Config(SystemCoreClock / 1000); // 1ms tick
     NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
 
-    LED_Reg_Init();
-    Switch_Reg_Init();
-    Motor_Init();
-
-    GPIO_SetBits(GPIOE,GPIO_Pin_All);
+    TIM2_Init();
+    LED_Init();
+    DAC1_Init();
     
-
     while (1) {
-        uint8_t speed = GPIO_ReadInputDataBit(GPIOF,GPIO_Pin_0);
-        stop = GPIO_ReadInputDataBit(GPIOF,GPIO_Pin_1);
-        dir = GPIO_ReadInputDataBit(GPIOF,GPIO_Pin_2);
-        uint32_t rpm = 2;
-        if (speed == 1) rpm = 5;
         
-        Motor_Task(stop,dir,rpm);
     }
 }
