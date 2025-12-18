@@ -1,8 +1,9 @@
-
+#include "printf.h"
 #include "cmsis_gcc.h"
 #include "stm32f4xx.h"
 #include "pot.h"
 #include "adc.h"
+#include "usart.h"
 
 void SystemClock_Config(void)
 {
@@ -54,7 +55,6 @@ void Delay(uint32_t delay)
     while ((tick - startTick) < delay);
 }
 
-uint16_t a = 0;
 int main(void)
 {
     SystemClock_Config();
@@ -62,8 +62,14 @@ int main(void)
 
     POT_Init();
     ADC1_Init();
+    USART1_Init();
 
     while (1) {
-        a = GetValueOnce();
+        // uint16_t value = GetValueOnce();
+        // printf("Hello World!");
+        // printf("value = %d V \n",value);
+        while (USART_GetFlagStatus(USART1,USART_FLAG_TXE) == 0);
+        USART_SendData(USART1,0x35);
+        Delay(1000);
     }
 }

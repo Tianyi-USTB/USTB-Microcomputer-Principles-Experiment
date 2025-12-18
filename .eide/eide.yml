@@ -35,6 +35,7 @@ targets:
         - lib/CMSIS/Core/Include
         - bsp/inc
         - bsp/src
+        - bsp/others
       libList: []
     excludeList: []
     toolchain: GCC
