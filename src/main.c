@@ -62,10 +62,10 @@ int main(void)
     LED_Init();
     GPIOE->ODR = ~(0x1);
 
-    Timer2_Init();
+    Timer4_Init();
     NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
-    Timer2_NVIC_Init();
-    TIM_Cmd(TIM2,ENABLE);
+    Timer4_NVIC_Init();
+    TIM_Cmd(TIM4,ENABLE);
 
     while (1) {
         // Delay(500);
