@@ -60,7 +60,7 @@ int main(void)
     SysTick_Config(SystemCoreClock / 1000); // 1ms tick
 
     LED_Init();
-    GPIOE->ODR = ~(0x1);
+    // GPIOD->ODR = ~(0x1 << 15);
 
     Timer4_Init();
     NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);

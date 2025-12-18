@@ -5,7 +5,7 @@ void Timer4_Init(){
 
     TIM_TimeBaseInitTypeDef TIM_BaseInitStruct;
     TIM_BaseInitStruct.TIM_Prescaler = 84 -1;
-    TIM_BaseInitStruct.TIM_Period = 1000 -1;
+    TIM_BaseInitStruct.TIM_Period = 1500 -1;
     TIM_BaseInitStruct.TIM_ClockDivision = TIM_CKD_DIV1;
     TIM_BaseInitStruct.TIM_CounterMode = TIM_CounterMode_Up;
 
@@ -35,16 +35,26 @@ void Timer4_NVIC_Init(){
 }
 
 void TIM4_IRQHandler(){
-    if(TIM_GetITStatus(TIM2,TIM_IT_Update)){
-        TIM_ClearITPendingBit(TIM2,TIM_IT_Update);
+    if(TIM_GetITStatus(TIM4,TIM_IT_Update)){
+        TIM_ClearITPendingBit(TIM4,TIM_IT_Update);
 
         static uint16_t cnt = 0;
+        static uint8_t status = 0;//0==UP 1==DOWN
         
-        cnt++;
-        if (cnt >= 10000)
-        {
-            cnt = 0;
+        if (status == 0){
+            cnt++;
+        }else{
+            cnt--;
         }
+
+        if (cnt >= 1000)
+        {
+            status = 1;
+        }if (cnt == 0)
+        {
+            status = 0;
+        }
+        
 
         TIM_SetCompare4(TIM4,cnt);
         
