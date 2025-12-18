@@ -1,8 +1,6 @@
 
 #include "cmsis_gcc.h"
 #include "stm32f4xx.h"
-#include "led.h"
-#include "switch.h"
 
 void SystemClock_Config(void)
 {
@@ -42,11 +40,8 @@ int main(void)
     SystemClock_Config();
     SysTick_Config(SystemCoreClock / 1000); // 1ms tick
 
-    LED_Reg_Init();
-    Switch_Reg_Init();
 
     while (1) {
-        GPIOE->ODR = (GPIOE->ODR & 0xFF << 8) | ~(GPIOF->IDR & 0xFF);
         // Delay(500);
     }
 }
